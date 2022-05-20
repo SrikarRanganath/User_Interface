@@ -14,6 +14,7 @@ import imutils
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 speck_size = 0# GLOBAL
+threshold = 0
 points_of_interest = [] #GLOBAL
 
 #height=img.shape[0]
@@ -478,6 +479,8 @@ class Ui_MainWindow(object):
         self.capture_button.setText(_translate("MainWindow", "CAPTURE"))
         self.capture_button.clicked.connect(self.show_image)        
         self.company_logo.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt; color:#ffffff;\">YantraVision</span></p></body></html>"))
+        self.test.clicked.connect(self.update_slider)        
+
         # will mark specks and holes
     def threshold(self , image):
         img1 = np.array(image, dtype=np.uint8)
@@ -507,7 +510,7 @@ class Ui_MainWindow(object):
         speck_count = 0
         hole_count = 0
         # Change the min and max sizes to identify smaller and biggers specks
-        min_area_speck = 30
+        min_area_speck = 50
         min_area_hole = 1200
         max_area_speck = 1000
         max_area_hole = 3000
@@ -527,6 +530,13 @@ class Ui_MainWindow(object):
         cv2.namedWindow("final", cv2.WINDOW_NORMAL)
         cv2.resizeWindow("final",800, 600)
         cv2.imshow("final",img1)
+        image1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
+        height0,width0,channel0 = image1.shape
+        bytes_per_line = channel0 * width0
+        qImg = QtGui.QImage(image1.data, width0, height0, bytes_per_line, QtGui.QImage.Format_RGB888)
+        pix = QtGui.QPixmap(qImg)
+        self.liveFeed.setPixmap(pix)
+        self.liveFeed.setScaledContents(True)
         #img1 is the final image to be displayed
         #self.liveFeed.setPixmap(QtGui.QPixmap())
         #self.liveFeed.setScaledContents(True)
@@ -543,11 +553,11 @@ class Ui_MainWindow(object):
             global points_of_interest
             points_of_interest.append((x , y))
             print(points_of_interest)
-            if len(points_of_interest) == 4:
+            if len(points_of_interest) >= 4:
                 self.select_roi.setChecked(False)
                 width = self.liveFeed.width()
                 height = self.liveFeed.height()
-                image = cv2.imread("/home/srikar/paper/CAM0/imageCaptureCAM0_1.bmp") # CAN CHANGE
+                image = cv2.imread("/home/srikar/paper/CAM0/imageCaptureCAM0_0.bmp") # CAN CHANGE
                 orig_width = image.shape[0]
                 orig_height = image.shape[1]
                 #new_value = ( (old_value - old_min) / (old_max - old_min) ) * (new_max - new_min) + new_min
@@ -564,24 +574,30 @@ class Ui_MainWindow(object):
                 nc1 = int(((oc1)/(width))*(orig_width))
                 image = image[nr0:nr1 ,nc0:nc1]
                 #cv2.imwrite("/home/srikar/paper/CAM0/liveFeed.bmp",image)
-                #image1 = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-                #image1 = QtGui.QPixmap(QtGui.QImage(image1.data.tobytes(), image1.shape[0], image1.shape[1], QtGui.QImage.Format_RGB888))                
-                #bytesPerLine = image.shape[2] * image.shape[0]
-                #qImg = QtGui.QImage(image.tobytes(), image.shape[0], image.shape[1], bytesPerLine, QtGui.QImage.Format_RGB888)
-                #pixmap01 = QtGui.QPixmap.fromImage(qImg)
-                #pixmap_image = QtGui.QPixmap(pixmap01)
-                image = np.require(image, np.uint8, 'C')
-                image = QtGui.QImage(image.data.tobytes(), image.shape[0], image.shape[1], QtGui.QImage.Format_RGB888)
-                self.liveFeed.setPixmap(QtGui.QPixmap(image)) #DONT CHANGE 
+                image1 = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                height0,width0,channel0 = image1.shape
+                bytes_per_line = channel0 * width0
+                qImg = QtGui.QImage(image1.data, width0, height0, bytes_per_line, QtGui.QImage.Format_RGB888)
+                pix = QtGui.QPixmap(qImg)
+                self.liveFeed.setPixmap(pix)
+                #self.liveFeed.setPixmap(QtGui.QPixmap(image1)) #DONT CHANGE 
                 self.liveFeed.setScaledContents(True)
                 self.threshold(image)
                 points_of_interest.clear() #DONT FORGET TO ADD A KEYSTROKE FOR CLEARING POINTS_OF_INTEREST
                 
     # will display image in liveFeed
     def show_image(self):
-        image_path = "/home/srikar/paper/CAM0/imageCaptureCAM0_1.bmp" # CAN CHANGE
+        image_path = "/home/srikar/paper/CAM0/imageCaptureCAM0_0.bmp" # CAN CHANGE
         self.liveFeed.setPixmap(QtGui.QPixmap(image_path))
         self.liveFeed.setScaledContents(True)
+
+    def update_slider(self):
+        global speck_size
+        speck_size = self.speck_size_slider.value()
+        global threshold
+        threshold = self.threshold_slider.value()
+        print("sp ", speck_size )
+        print("threshold ", threshold )
 
 
 
