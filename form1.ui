@@ -52,7 +52,7 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="test">
+    <widget class="QPushButton" name="update_push_button">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -73,7 +73,7 @@
       <string>UPDATE</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_5">
+    <widget class="QLabel" name="inspection_settings_label">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -91,7 +91,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;INSPECTION SETTINGS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="test_2">
+    <widget class="QPushButton" name="run_push_button">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -112,7 +112,7 @@
       <string>RUN</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="test_3">
+    <widget class="QPushButton" name="stop_push_button">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -133,7 +133,7 @@
       <string>STOP</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QComboBox" name="defect_list">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -181,7 +181,7 @@ background-color: rgb(114, 159, 207);
       </property>
      </item>
     </widget>
-    <widget class="QLabel" name="label_4">
+    <widget class="QLabel" name="speck_size_label">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -316,7 +316,7 @@ background-color: rgb(114, 159, 207);
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QLabel" name="label_9">
+    <widget class="QLabel" name="threshold_label">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -800,7 +800,7 @@ font: 11pt &quot;Ubuntu&quot;;</string>
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QLabel" name="label_10">
+    <widget class="QLabel" name="speck_size">
      <property name="geometry">
       <rect>
        <x>330</x>
@@ -816,7 +816,7 @@ font: 11pt &quot;Ubuntu&quot;;</string>
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_11">
+    <widget class="QLabel" name="threshold">
      <property name="geometry">
       <rect>
        <x>330</x>
@@ -885,7 +885,7 @@ font: 11pt &quot;Ubuntu&quot;;</string>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QLabel" name="label_3">
+         <widget class="QLabel" name="web_speed_label">
           <property name="font">
            <font>
             <pointsize>17</pointsize>
@@ -903,7 +903,7 @@ font: 11pt &quot;Ubuntu&quot;;</string>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="pass_3">
+         <widget class="QLabel" name="web_speed_count">
           <property name="font">
            <font>
             <pointsize>15</pointsize>
@@ -925,7 +925,7 @@ font: 11pt &quot;Ubuntu&quot;;</string>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QLabel" name="label_6">
+         <widget class="QLabel" name="specks_label">
           <property name="font">
            <font>
             <pointsize>17</pointsize>
@@ -943,7 +943,7 @@ font: 11pt &quot;Ubuntu&quot;;</string>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="pass_4">
+         <widget class="QLabel" name="specks_count">
           <property name="font">
            <font>
             <pointsize>15</pointsize>
@@ -965,7 +965,7 @@ font: 11pt &quot;Ubuntu&quot;;</string>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="holes_label">
           <property name="font">
            <font>
             <pointsize>17</pointsize>
@@ -983,7 +983,7 @@ font: 11pt &quot;Ubuntu&quot;;</string>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="pass_5">
+         <widget class="QLabel" name="holes_count">
           <property name="font">
            <font>
             <pointsize>15</pointsize>
@@ -1005,7 +1005,7 @@ font: 11pt &quot;Ubuntu&quot;;</string>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QLabel" name="label_7">
+         <widget class="QLabel" name="fibers_label">
           <property name="font">
            <font>
             <pointsize>17</pointsize>
@@ -1023,7 +1023,7 @@ font: 11pt &quot;Ubuntu&quot;;</string>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="pass_6">
+         <widget class="QLabel" name="fibers_count">
           <property name="font">
            <font>
             <pointsize>15</pointsize>
@@ -1045,7 +1045,7 @@ font: 11pt &quot;Ubuntu&quot;;</string>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="QLabel" name="label_8">
+         <widget class="QLabel" name="brightness_label">
           <property name="font">
            <font>
             <pointsize>17</pointsize>
@@ -1063,7 +1063,7 @@ font: 11pt &quot;Ubuntu&quot;;</string>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="pass_7">
+         <widget class="QLabel" name="brightness_count">
           <property name="font">
            <font>
             <pointsize>15</pointsize>
@@ -1163,7 +1163,7 @@ background: rgb(114, 159, 207)</string>
   <connection>
    <sender>speck_size_slider</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>label_10</receiver>
+   <receiver>speck_size</receiver>
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1179,7 +1179,7 @@ background: rgb(114, 159, 207)</string>
   <connection>
    <sender>threshold_slider</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>label_11</receiver>
+   <receiver>threshold</receiver>
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
