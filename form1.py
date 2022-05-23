@@ -507,24 +507,31 @@ class Ui_MainWindow(object):
         #FINDING CONTOURS
         cnts1 = cv2.findContours(th2,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
         cnts1 = imutils.grab_contours(cnts1)
+        for c in cnts1:
+            peri = cv2.arcLength(c, True)
+            approx = cv2.approxPolyDP(c, 0.05*peri, True)
+            if len(approx) ==4:
+                doc_cnts = approx
+                break
+        print("paper border cordinates",doc_cnts)
         speck_count = 0
         hole_count = 0
         # Change the min and max sizes to identify smaller and biggers specks
         min_area_speck = speck_size
-        min_area_hole = 900
+        min_area_hole = 1200
         max_area_speck = speck_size+50
         max_area_hole = 20000
         for c in cnts1:
-            if min_area_speck < cv2.contourArea(c)<min_area_hole:
-                #cv2.drawContours(img1,[c],0,(255,0,0),2)
+            if min_area_speck < cv2.contourArea(c) < min_area_hole:
                 x,y,w,h = cv2.boundingRect(c)
-                cv2.rectangle(img1, (x-5, y-5), (x+w+5, y+h+5), (255, 0, 0), 2)
-                speck_count += 1
-            if min_area_hole<cv2.contourArea(c)<max_area_hole: #<max_area:
-                #cv2.drawContours(img1,[c],0,(0,0,255),3)
+                if cv2.pointPolygonTest(doc_cnts,(x,y),False) == 1:
+                    cv2.rectangle(img1, (x-5, y-5), (x+w+5, y+h+5), (255, 0, 0), 2)
+                    speck_count += 1
+            if min_area_hole<cv2.contourArea(c): #<max_area:
                 x,y,w,h = cv2.boundingRect(c)
-                cv2.rectangle(img1, (x-5, y-5), (x+w+5, y+h+5), (0, 0, 255), 2)
-                hole_count += 1
+                if cv2.pointPolygonTest(doc_cnts,(x,y),False) == 1:
+                    cv2.rectangle(img1, (x-5, y-5), (x+w+5, y+h+5), (0, 0, 255), 2)
+                    hole_count += 1
         print("number of specks = ",speck_count)
         print("number of holes = ",hole_count) 
         cv2.namedWindow("final", cv2.WINDOW_NORMAL)
@@ -544,7 +551,7 @@ class Ui_MainWindow(object):
         self.holes_count.setText(str(hole_count))
         self.fibers_count.setText(str(hole_count))
 
-    def mousePressEvent(self, QMouseEvent):
+    """def mousePressEvent(self, QMouseEvent):
         cursor_on_image = self.liveFeed.underMouse()
         roi_check_box = self.select_roi.isChecked()
         x_position = self.liveFeed.x()
@@ -587,12 +594,14 @@ class Ui_MainWindow(object):
                 self.liveFeed.setScaledContents(True)
                 self.thresholding_algorithm(image)
                 points_of_interest.clear() #DONT FORGET TO ADD A KEYSTROKE FOR CLEARING POINTS_OF_INTEREST
-                
+     """           
     # will display image in liveFeed
     def show_image(self):
         image_path = "/home/srikar/paper/CAM1/imageCaptureCAM0_2.bmp" # CAN CHANGE
         self.liveFeed.setPixmap(QtGui.QPixmap(image_path))
         self.liveFeed.setScaledContents(True)
+        image = cv2.imread(image_path)
+        self.thresholding_algorithm(image)
 
     def update_slider(self):
         global speck_size
